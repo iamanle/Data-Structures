@@ -16,7 +16,7 @@ public class Stack<E> implements Iterable<E>{
 	}
 	
 	//inserts the object obj into the stack
-	//If use addFirst then removeFirst. Use addLast then removeLast. Since addFirst/removeFirst take O(1):
+	//Use addFirst then removeFirst. Use addLast then removeLast. Since addFirst/removeFirst take O(1):
 	public void push(E obj){
 		list.addFirst(obj);
 	} 
