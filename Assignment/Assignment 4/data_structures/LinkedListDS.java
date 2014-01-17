@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class LinkedListDS<E> implements ListADT<E> {
+	@SuppressWarnings("hiding")
 	protected class Node<E>{
 		E data;
 		Node<E> next;
@@ -29,6 +30,7 @@ public class LinkedListDS<E> implements ListADT<E> {
 		currentSize = 0;
 	}
 
+//------------------------------addFirst------------------------------
 	//Adds the Object obj to the beginning of the list.
 	public void addFirst(E obj){
 		Node<E> newNode = new Node<E>(obj);
@@ -41,10 +43,11 @@ public class LinkedListDS<E> implements ListADT<E> {
 		currentSize++;
 	}
 
+//------------------------------addLast------------------------------
 	//Adds the Object obj to the end of the list.
 	public void addLast(E obj){
 		Node<E> newNode = new Node<E>(obj);
-		if (tail == null)
+		if (head == null)
 			head = tail = newNode;
 		else {
 			tail.next = newNode;
@@ -53,6 +56,7 @@ public class LinkedListDS<E> implements ListADT<E> {
 		currentSize++;
 	}
 
+//------------------------------removeFirst------------------------------
 	//Removes the first Object in the list and returns it.
 	//Returns null if the list is empty.
 	public E removeFirst(){
@@ -67,6 +71,7 @@ public class LinkedListDS<E> implements ListADT<E> {
 		return tmp;
 	}
 
+//------------------------------removeLast------------------------------
 	//Removes the last Object in the list and returns it.
 	//Returns null if the list is empty.
 	public E removeLast(){
@@ -76,12 +81,12 @@ public class LinkedListDS<E> implements ListADT<E> {
 		
 		E tmp = tail.data;
 		Node<E> previous = null, current = head;
-		//If there is one element.
-		if (current == tail) {
-			head = tail = null;
-			currentSize--;
-			return tmp;
-		}
+		
+//		if (current == tail){
+//			head = tail = null;
+//			currentSize--;
+//			return tmp;
+//		}
 		
 		//If there are more than 1 element:
 		//Find previous and set tail to current.
@@ -89,6 +94,7 @@ public class LinkedListDS<E> implements ListADT<E> {
 			previous = current;
 			current = current.next;
 		}
+		//If there is one element.
 		if (previous == null)
 			head = tail = null;
 		else{
@@ -96,9 +102,10 @@ public class LinkedListDS<E> implements ListADT<E> {
 			tail = previous;
 		}
 		currentSize--;
-		return null;
+		return tmp;
 	}
 
+//------------------------------peekFirst------------------------------
 	//Returns the first Object in the list, but does not remove it
 	//Return null if the list is empty
 	public E peekFirst(){
@@ -107,16 +114,19 @@ public class LinkedListDS<E> implements ListADT<E> {
 		return head.data;
 	}
 
+//------------------------------peekLast------------------------------
 	//Returns the last Object in the list, but does not remove it
 	//Return null if the list is empty
 	public E peekLast(){
-		if (head == null)
+		if (tail == null)
 			return null;
 		return tail.data;
 	}
 
+//------------------------------find------------------------------
 	//Finds and returns the Object obj if it is in the list, otherwise
 	//returns null. Does not modify the list in anyway
+	@SuppressWarnings("unchecked")
 	public E find(E obj){
 		Node<E> tmp = head;
 		while (tmp != null){
@@ -126,8 +136,10 @@ public class LinkedListDS<E> implements ListADT<E> {
 		return null;
 	}
 
+//------------------------------remove------------------------------
 	//Removes the first instance of the specific Object obj from the list, if it exists.
 	//Returns true if the Object obj was found and removed, otherwise false.
+	@SuppressWarnings("unchecked")
 	public boolean remove(E obj){
 		Node<E> previous = null, current = head;
 		
@@ -157,15 +169,19 @@ public class LinkedListDS<E> implements ListADT<E> {
 			currentSize--;
 		}
 		return true;
+		
 	}
 
+//------------------------------makeEmpty------------------------------
 	//The list is returned to an empty state.
 	public void makeEmpty(){
 		head = tail = null;
 		currentSize = 0;
 	}
 
+//------------------------------contains------------------------------
 	//Returns true if the list contains the Object obj, otherwise false.
+	@SuppressWarnings("unchecked")
 	public boolean contains(E obj){
 		Node<E> tmp = head;
 		while (tmp != null){
@@ -175,21 +191,25 @@ public class LinkedListDS<E> implements ListADT<E> {
 		return false;
 	}
 
+//------------------------------isEmpty------------------------------
 	//Returns true if the list is empty, otherwise false
 	public boolean isEmpty(){
 		return (size() ==  0);
 	}
 
+//------------------------------isFull------------------------------
 	//Returns true if the list is full, otherwise false.
 	public boolean isFull(){
 		return false;
 	}
 
+//------------------------------size------------------------------
 	//Returns the number of Objects currently in the list.
 	public int size(){
 		return currentSize;
 	}
 
+//------------------------------iterator------------------------------
 	//Returns an Iterator of the values in the list, presented in
 	//the same order as the list.
 	public Iterator<E> iterator(){
